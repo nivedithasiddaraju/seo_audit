@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart SEO Auditor</title>
     <link
       rel="stylesheet"
@@ -13,9 +12,7 @@
   <body>
     <header>
       <h1>🌐 Smart SEO Auditor</h1>
-      <p>
-        Instantly check your website's SEO performance and download a report.
-      </p>
+      <p>Analyze, Fix & Optimize Your Website with AI!</p>
     </header>
 
     <main class="card">
@@ -26,6 +23,11 @@
           placeholder="Enter website URL (e.g. https://example.com)"
           required
         />
+        <label>Do you own this website?</label>
+        <select name="ownership" required>
+          <option value="no">No</option>
+          <option value="yes">Yes</option>
+        </select>
         <button type="submit">Analyze 🚀</button>
       </form>
 
@@ -37,8 +39,11 @@
 
         <div class="chart-box">
           <canvas id="seoChart"></canvas>
-          <p class="score-text">Score: {{ result.seo_score }}%</p>
+          <p class="score-text">SEO Score: {{ result.seo_score }}%</p>
         </div>
+
+        <p><strong>Platform:</strong> {{ result.platform }}</p>
+        <p class="ownership-msg">{{ result.ownership_message }}</p>
 
         <div class="metrics">
           <p><strong>Title:</strong> {{ result.title }}</p>
@@ -46,34 +51,48 @@
           <p><strong>H1 Tags:</strong> {{ result.h1_count }}</p>
           <p><strong>Images Missing Alt:</strong> {{ result.missing_alt }}</p>
           <p><strong>Links Found:</strong> {{ result.link_count }}</p>
-          <p><strong>Load Time:</strong> {{ result.load_time }} seconds</p>
+          <p><strong>Load Time:</strong> {{ result.load_time }}s</p>
         </div>
 
         {% if result.report %}
         <div class="issues">
-          <h3>⚠️ Suggestions</h3>
+          <h3>⚠️ Issues Found</h3>
           <ul>
             {% for issue in result.report %}
             <li>{{ issue }}</li>
             {% endfor %}
           </ul>
         </div>
-        {% else %}
-        <p class="perfect">🎉 Excellent! No major SEO issues detected.</p>
+
+        <div class="issues">
+          <h3>✅ AI Recommendations</h3>
+          <ul>
+            {% for fix in result.fixes %}
+            <li>{{ fix }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %} {% if result.fixed_path %}
+        <a
+          class="download-btn"
+          href="{{ url_for('serve_fixed_files', filename='corrected_page.html') }}"
+          target="_blank"
+          >🛠️ View AI-Fixed Page</a
+        >
         {% endif %}
 
         <form method="POST" action="/download">
           {% for key, value in result.items() %}
           <input type="hidden" name="{{ key }}" value="{{ value }}" />
           {% endfor %}
-          <button class="download-btn">📄 Download Report</button>
+          <button class="download-btn">📄 Download PDF Report</button>
         </form>
       </div>
       {% endif %} {% endif %}
     </main>
 
     <footer>
-      <p>Made with 💙 | Smart SEO Auditor Project</p>
+      <p>Made with 💙 | Smart SEO Auditor</p>
     </footer>
 
     {% if result and not result.error %}
@@ -85,17 +104,11 @@
         data: {
           datasets: [{
             data: [score, 100 - score],
-            backgroundColor: [
-              score >= 80 ? '#00c853' : score >= 60 ? '#ffb300' : '#e53935',
-              '#e0e0e0'
-            ],
+            backgroundColor: [score >= 80 ? '#00c853' : score >= 60 ? '#ffb300' : '#e53935', '#e0e0e0'],
             borderWidth: 0
           }]
         },
-        options: {
-          cutout: '70%',
-          plugins: { legend: { display: false } }
-        }
+        options: { cutout: '70%', plugins: { legend: { display: false } } }
       });
     </script>
     {% endif %}

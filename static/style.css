@@ -16,7 +16,7 @@ header {
 }
 
 main.card {
-  background: #ffffff;
+  background: white;
   border-radius: 20px;
   padding: 30px;
   margin: 40px auto;
@@ -26,13 +26,14 @@ main.card {
 
 .url-form {
   display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
 }
 
-.url-form input {
-  width: 70%;
+.url-form input,
+select {
+  width: 80%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -46,6 +47,7 @@ main.card {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 16px;
   transition: 0.3s;
 }
 
@@ -54,12 +56,13 @@ main.card {
 }
 
 .results {
-  margin-top: 25px;
+  margin-top: 30px;
   text-align: center;
 }
 
 .chart-box {
-  width: 250px;
+  position: relative;
+  width: 200px;
   margin: 20px auto;
 }
 
@@ -69,39 +72,29 @@ main.card {
   font-size: 18px;
 }
 
-.metrics {
-  background: #f7faff;
-  padding: 15px;
-  border-radius: 12px;
-  text-align: left;
-  margin-top: 20px;
-}
-
 .issues {
-  background: #fff8e1;
+  text-align: left;
+  margin: 20px 0;
+  background: #f9f9f9;
   padding: 15px;
-  border-radius: 12px;
-  margin-top: 20px;
-  border-left: 5px solid #ffb300;
+  border-radius: 10px;
 }
 
-.perfect {
-  background: #e8f5e9;
-  padding: 15px;
-  border-radius: 12px;
-  margin-top: 20px;
-  border-left: 5px solid #00c853;
-  color: #2e7d32;
+.issues h3 {
+  color: #1976d2;
+  margin-bottom: 10px;
 }
 
 .download-btn {
   background: #00c853;
   color: white;
-  padding: 10px 18px;
-  border: none;
+  padding: 10px 20px;
   border-radius: 10px;
-  margin-top: 15px;
+  border: none;
+  margin: 10px;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
   transition: 0.3s;
 }
 
@@ -110,16 +103,15 @@ main.card {
 }
 
 .error {
-  color: #e53935;
-  background: #ffebee;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 15px;
+  color: red;
+  text-align: center;
+  font-weight: bold;
 }
 
 footer {
   text-align: center;
   padding: 20px;
-  font-size: 14px;
-  color: #555;
+  background: #f5f5f5;
+  border-top: 1px solid #ddd;
+  margin-top: 40px;
 }
